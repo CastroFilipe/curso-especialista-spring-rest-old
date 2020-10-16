@@ -12,18 +12,18 @@ public class AtivacaoClienteService {
 	private Notificador notificador;
 	
 	//Ponto de injeção 1: Construtor
-	@Autowired
-	public AtivacaoClienteService(Notificador notificador) {
+	public AtivacaoClienteService(@Autowired(required = false) Notificador notificador) {		
 		this.notificador = notificador;
-	}
-	
-	public AtivacaoClienteService(String parametroQualquer) {
-		
 	}
 	
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
+		
+		if(notificador != null) {
+			notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");			
+		} else {
+			System.out.println("Não existe notificado, porém o cadastro foi ativado");
+		}
 
-		notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
 	}
 }
