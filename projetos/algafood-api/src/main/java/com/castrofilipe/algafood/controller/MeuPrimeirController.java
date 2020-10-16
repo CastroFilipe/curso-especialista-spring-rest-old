@@ -11,16 +11,9 @@ import com.castrofilipe.algafood.modelo.Cliente;
 public class MeuPrimeirController {
 	
 	private AtivacaoClienteService ativacaoClienteService;
-	
-	/*
-	 * Injeção de dependência através do construtor. Nesse caso o 
-	 * acomplamento será forte pois não será utilizada interfaces.
-	 * */
+
 	public MeuPrimeirController(AtivacaoClienteService ativacaoClienteService) {
 		this.ativacaoClienteService = ativacaoClienteService;
-		
-		System.out.println("MeuPrimeiroController- Bean Injetado via construtor: " 
-				+ ativacaoClienteService);
 	}
 	
 	@GetMapping("/hello")
