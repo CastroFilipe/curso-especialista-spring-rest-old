@@ -12,7 +12,7 @@ import com.castrofilipe.algafood.event.ClienteAtivadoEvent;
 @Component
 public class NotificacaoListenerService {
 
-	@TipoDoNotificador(value = NivelUrgencia.URGENTE)
+	@TipoDoNotificador(value = NivelUrgencia.NORMAL)
 	@Autowired
 	private Notificador notificador;
 	

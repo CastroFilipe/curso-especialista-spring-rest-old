@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.castrofilipe.algafood.modelo.Cliente;
 import com.castrofilipe.algafood.properties.NotificadorProperties;
 
-@Profile("prod")
+@Profile("production")
 @TipoDoNotificador(value = NivelUrgencia.NORMAL)
 @Component
 public class NotificadorEmail implements Notificador {
