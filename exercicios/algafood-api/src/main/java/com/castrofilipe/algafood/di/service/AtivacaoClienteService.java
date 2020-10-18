@@ -1,40 +1,29 @@
 package com.castrofilipe.algafood.di.service;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import com.castrofilipe.algafood.di.notificacao.NivelUrgencia;
-import com.castrofilipe.algafood.di.notificacao.Notificador;
-import com.castrofilipe.algafood.di.notificacao.TipoDoNotificador;
+import com.castrofilipe.algafood.event.ClienteAtivadoEvent;
 import com.castrofilipe.algafood.modelo.Cliente;
 
 @Component
 public class AtivacaoClienteService {
 
-	private Notificador notificador;
-
+	/*
+	 * Interface que permite a publicação de eventos para que o IOc 
+	 * tome conhecimento de que algum evento ocorreu na aplicação.
+	 * Com a interface é possível trabalhar com o padrão observer na aplicação.
+	 * */
 	@Autowired
-	public AtivacaoClienteService(@TipoDoNotificador(value = NivelUrgencia.NORMAL) Notificador notificador) {
-		this.notificador = notificador;
-	}
+	private ApplicationEventPublisher eventPublisher;
 	
-	@PostConstruct
-	private void init() {
-		System.out.println("Método chamado logo após a fase de INICIALIZAÇÃO do bean "
-				+ "(Somente após chamar o construtor)");
-	}
-	
-	@PreDestroy
-	private void preDestroy() {
-		System.out.println("Método chamado ANTES de iniciar a fase de DESTRUIÇÃO do bean");		
-	}
-
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
-		notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
+		
+		// Padrão observer. Aqui será publicado o evento informando que o cliente está ativo.
+		System.out.println("AtivacaoClienteService: Evento de ativação do cliente foi lançado");
+		eventPublisher.publishEvent(new ClienteAtivadoEvent(cliente));
 
 	}
 }
